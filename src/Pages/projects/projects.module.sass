@@ -1,0 +1,42 @@
+@import src/index
+
+.container
+	+column()
+	+size(100%)
+
+.header
+	+column()
+	padding: 25px 120px 20px
+	background-color: #021873
+	color: #fff
+
+	&__info
+		+row(center, space-between)
+		margin-bottom: 46px
+		padding-bottom: 24px
+		border-bottom: 1px solid rgba(255, 255, 255, 0.37)
+
+	&__caption
+		margin-bottom: 39px
+		font-weight: 500
+		font-size: 45px
+		line-height: 57px
+		letter-spacing: -0.015em
+
+	&__action-panel
+		+row()
+
+		> * + *
+			margin-left: 16px
+
+.table
+	padding: 39px 120px
+
+	&__header
+		+row()
+
+	&__row
+		+row()
+
+._right
+	margin-left: auto

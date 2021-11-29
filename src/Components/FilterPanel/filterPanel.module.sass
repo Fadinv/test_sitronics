@@ -1,0 +1,56 @@
+@import src/index
+
+.container
+	+fill()
+	background-color: rgba(28, 28, 28, .15)
+	z-index: -99
+	opacity: 0
+	transition: none
+
+	&._active
+		transition: opacity .3s ease-out
+		opacity: 1
+		z-index: 99
+
+.close-btn
+	+size(26px)
+	border-radius: 4px
+	transition: background-color .2s ease-out
+	+row(center, center)
+	cursor: pointer
+
+	&:hover
+		background-color: rgba(#000, .1)
+
+.inner
+	position: fixed
+	right: 0
+	top: 0
+	bottom: 0
+	padding: 56px 40px
+	overflow: auto
+	width: 300px
+	background-color: #fff
+	+column()
+
+.header
+	+row(center, space-between)
+	font-weight: 500
+	font-size: 30px
+	line-height: 38px
+	letter-spacing: -0.01em
+	color: #202020
+
+.input-box
+	+column()
+
+	> * + *
+		margin-top: 30px
+
+.action-box
+	+row(center, flex-end)
+	width: 100%
+	margin-top: auto
+
+	> * + *
+		margin-left: 36px

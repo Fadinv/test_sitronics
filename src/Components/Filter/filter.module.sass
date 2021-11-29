@@ -1,0 +1,15 @@
+@import src/index
+
+.container
+	background: rgba(#fff, .13)
+	border-radius: 10px
+	color: #fff
+	padding: 16px 15px
+	cursor: pointer
+	+row()
+
+	> * + *
+		margin-left: 6px
+
+.icon
+	+row(center, center)
