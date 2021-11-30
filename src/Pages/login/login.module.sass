@@ -1,15 +1,23 @@
 @import src/index
 
+.scroll
+	+size()
+	overflow: hidden
+
 .container
 	+row()
 	+size()
+	overflow: hidden
 	background-color: #021873
 
 .left-side
-	background-color: $var__login-background
-	+size(695px, calc(100% - 110px))
+	background-color: #0C2179
+	min-height: 100vh
+	height: 100%
 	+column(null, space-between)
-	padding: 40px 170px 70px
+	padding: 0 170px
+	flex: 1 0 auto
+	overflow: auto
 
 .logo
 	cursor: pointer
@@ -19,6 +27,8 @@
 
 .auth-form
 	+column()
+	min-width: 355px
+	width: 100%
 
 	&__header
 		font-weight: 500
@@ -60,10 +70,26 @@
 	line-height: 19px
 	letter-spacing: 0.005em
 	color: #7D8CCC
+	margin-bottom: 70px
+	margin-top: 10px
 	+column()
 
 .right-side
 	mix-blend-mode: screen
 	display: block
-	width: 100%
+	min-width: 100%
 	height: 100%
+	overflow: hidden
+
+@media (max-width: 760px)
+	.left-side
+		min-height: 100vh
+		width: calc(100% - 20vw)
+		padding: 0 10vw
+
+	.auth-form
+		min-width: unset
+
+@media (max-width: 1024px)
+	.right-side
+		display: none

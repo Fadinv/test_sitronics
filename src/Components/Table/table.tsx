@@ -2,7 +2,7 @@ import styles from './table.module.sass';
 import * as React from 'react';
 import {cn} from '../../Utils/cn';
 import {RowItemState, rowList} from './rowList';
-import {useState} from 'react';
+import {useEffect, useState} from 'react';
 
 interface TableProps {}
 
@@ -74,6 +74,15 @@ const headerList = [
 
 export const Table: React.FC<TableProps> = () => {
 	const [page, setPage] = useState(1);
+	const [width, setWidth] = useState(0);
+
+	const onResize = () => setWidth(window.document.documentElement.offsetWidth);
+
+	useEffect(() => {
+		onResize();
+		window.addEventListener('resize', onResize);
+		return () => window.removeEventListener('resize', onResize);
+	});
 
 	const renderHeaderCell = (item: { id: TableColumns }, index: number) => {
 		return (
@@ -87,10 +96,44 @@ export const Table: React.FC<TableProps> = () => {
 		);
 	};
 
+	const renderCompactRowCell = (name: string, index: number, arr: string[]) => {
+		switch (index as TableColumns) {
+			case TableColumns.project:
+				return (
+					<div key={index} className={cn(styles['row-cell-compact'])}>
+						<span>{name}</span>
+						<span className={styles['created-at']}>{arr[TableColumns.createdAt]}</span>
+					</div>
+				);
+			case TableColumns.state:
+				return (
+					<span key={index} className={cn(styles['row-cell-compact'], styles['_left'])}>
+						<span className={getStateClassName(name as RowItemState)}>
+							{getStateCaption(name as RowItemState)}
+						</span>
+					</span>
+				);
+			case TableColumns.createdAt:
+				return (
+					<div className={styles['row-icon']}>
+						<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+							<path d="M7.08337 4.16663L12.9167 9.99996L7.08337 15.8333" stroke="#9399A1" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+						</svg>
+					</div>
+				);
+			case TableColumns.company:
+			case TableColumns.industry:
+			case TableColumns.stage:
+			default:
+				return null;
+		}
+	};
+
 	const renderRowCell = (name: string, index: number) => {
 		if (index === TableColumns.state) {
 			return (
 				<span
+					key={index}
 					className={cn(styles['row-cell'])}
 					style={{width: TableWidthById.get(index) ?? 0}}
 				>
@@ -103,6 +146,7 @@ export const Table: React.FC<TableProps> = () => {
 
 		return (
 			<span
+				key={index}
 				className={cn(styles['row-cell'], index === headerList.length - 1 && styles['_last'])}
 				style={{width: TableWidthById.get(index) ?? 0}}
 			>
@@ -113,6 +157,15 @@ export const Table: React.FC<TableProps> = () => {
 
 	const renderRow = (cells: string[], index: number) => {
 		if (index < 25 * (page - 1) || index >= Math.min(25 * page, rowList.length)) return null;
+
+		if (width < 1200) {
+			return (
+				<div key={'compact_' + String(index)} className={styles['row-compact']}>
+					{cells.map(renderCompactRowCell)}
+				</div>
+			);
+		}
+
 		return (
 			<div key={index} className={styles['row']}>
 				{cells.map(renderRowCell)}
@@ -188,7 +241,6 @@ export const Table: React.FC<TableProps> = () => {
 						</div>
 					}
 				</div>
-
 			</div>
 		</div>
 	);

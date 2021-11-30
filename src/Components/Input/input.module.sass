@@ -1,8 +1,11 @@
+@import src/index
+
 .container
 	width: 100%
 	font-size: 16px
 	line-height: 20px
 	letter-spacing: 0.005em
+	position: relative
 
 .input
 	width: 100%
@@ -11,12 +14,23 @@
 	border: 1px solid #48599D
 	border-radius: 10px
 	padding: 19px 16px
+	font-size: 16px
 	line-height: 20px
+	letter-spacing: 0.005em
 	color: #7D8CCC
 	outline: none
 
 	&:focus
-		border: 1px solid #2858CE
+		border: 1px solid #E3E5EF
+		color: #fff
+
+.placeholder
+	position: absolute
+	top: 0
+	bottom: 0
+	left: 16px
+	+row(center, center)
+	color: #7D8CCC
 
 .label
 	font-weight: 500
@@ -25,3 +39,10 @@
 	letter-spacing: 0.005em
 	color: #202020
 	margin-bottom: 16px
+
+.icon
+	+size(22px)
+	+row(center, center)
+	position: absolute
+	right: 16px
+	top: calc(50% - 11px)

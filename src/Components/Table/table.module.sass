@@ -6,21 +6,24 @@
 
 .padding-wrap
 	padding: 0 120px
-	overflow: hidden
+	overflow: auto
 	height: 100%
 
 .inner
-	overflow: hidden
-	height: 100%
+	//overflow: hidden
+	min-height: 100%
+	+column(null, space-between)
 
 .pagination
 	display: block
 	margin-bottom: 26px
 	height: 58px
+	margin-top: auto
 	+row(center, space-between)
+	border-top: 1px solid #F2F2F2
 
 .header
-	margin-top:
+	margin-top: 39px
 	padding: 20px
 	+row()
 	font-size: 15px
@@ -49,6 +52,9 @@
 	line-height: 120%
 	letter-spacing: 0.005em
 
+	&:last-child
+		border-bottom: none
+
 	> * + *
 		margin-left: 8px
 
@@ -58,9 +64,37 @@
 		margin-left: auto
 		text-align: right
 
-.scrollable
-	height: calc(100% - 146px)
-	overflow: auto
+.row-compact
+	+row()
+	padding: 16px 0
+	font-size: 14px
+	border-bottom: 1px solid #E4E4E4
+
+	&:first-child
+		margin-top: 10px
+
+	> * + *
+		margin-left: 11px
+
+.row-cell-compact
+	+column(null, center)
+
+	> * + *
+		margin-top: 4px
+
+	&._left
+		margin-left: auto
+
+.project-name
+	font-weight: 500
+	font-size: 14px
+	line-height: 120%
+	color: #2F2F37
+
+.created-at
+	font-size: 13px
+	line-height: 120%
+	color: #8C929B
 
 .canceled,
 .completed,
@@ -98,3 +132,13 @@
 
 .left
 	transform: rotate(180deg)
+
+@media (max-width: 700px)
+	.padding-wrap
+		padding: 0 16px
+
+@media (max-width: 1200px)
+	.header
+		display: none
+	.scrollable
+		height: calc(100% - 50px)

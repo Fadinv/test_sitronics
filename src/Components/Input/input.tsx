@@ -7,13 +7,7 @@ interface InputProps {
 	type?: HTMLInputTypeAttribute;
 	onChange?: (value: string) => void;
 	value?: string;
-	theme?: InputThemes;
-	label?: string;
-}
-
-enum InputThemes {
-	default = '_default',
-	white = '_white',
+	icon?: () => React.ReactNode;
 }
 
 export const Input: React.FC<InputProps> = (
@@ -22,20 +16,35 @@ export const Input: React.FC<InputProps> = (
 		type,
 		placeHolder,
 		onChange,
-		theme,
-		label,
+		icon,
 	},
 ) => {
+	const inputRef = React.createRef<HTMLInputElement>();
+
 	const doChange = (e: ChangeEvent<HTMLInputElement>) => onChange?.(e.target.value);
+
 	return (
 		<div className={styles['container']}>
+			{
+				!value &&
+				<div className={styles['placeholder']}>
+					{placeHolder}
+				</div>
+			}
 			<input
+				ref={inputRef}
 				className={styles['input']}
 				onChange={doChange}
 				type={type}
-				placeholder={placeHolder}
 				value={value}
 			/>
+			<div onClick={(e) => {
+				e.preventDefault();
+				e.stopPropagation();
+				inputRef.current?.focus();
+			}} className={styles['icon']}>
+				{icon?.()}
+			</div>
 		</div>
 	);
 };

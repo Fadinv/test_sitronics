@@ -21,7 +21,7 @@ export const Filter: React.FC<FilterProps> = ({caption, openModal}) => {
 	return (
 		<span onClick={openModal} className={styles['container']}>
 			{renderIcon()}
-			<span>{caption || 'Фильтр'}</span>
+			<span className={styles['caption']}>{caption || 'Фильтр'}</span>
 		</span>
 	);
 };
